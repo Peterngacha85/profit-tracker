@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import api from '../api';
 import { format } from 'date-fns';
 import {
   Plus,
@@ -56,7 +56,7 @@ const Transactions = () => {
         params.append('endDate', filters.endDate);
       }
 
-      const response = await axios.get(`/api/transactions?${params}`);
+      const response = await api.get(`/api/transactions?${params}`);
       setTransactions(response.data.data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
@@ -74,10 +74,10 @@ const Transactions = () => {
         delete submitData.category;
       }
       if (editingTransaction) {
-        await axios.put(`/api/transactions/${editingTransaction._id}`, submitData);
+        await api.put(`/api/transactions/${editingTransaction._id}`, submitData);
         toast.success('Transaction updated successfully');
       } else {
-        await axios.post('/api/transactions', submitData);
+        await api.post('/api/transactions', submitData);
         toast.success('Transaction created successfully');
       }
       
@@ -106,7 +106,7 @@ const Transactions = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
       try {
-        await axios.delete(`/api/transactions/${id}`);
+        await api.delete(`/api/transactions/${id}`);
         toast.success('Transaction deleted successfully');
         fetchTransactions();
       } catch (error) {
