@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // CORS middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'https://profit-tracker-22pm-9q6q2lssz-peters-projects-f8998151.vercel.app',
+  origin: process.env.CLIENT_URL || 'https://profit-tracker-nine.vercel.app',
   credentials: true
 }));
 
