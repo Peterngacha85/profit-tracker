@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { format } from 'date-fns';
 import {
   BarChart,
@@ -50,8 +50,8 @@ const Reports = () => {
       }
 
       const [analyticsRes, debtorRes] = await Promise.all([
-        axios.get(`/api/transactions/analytics?${params}`),
-        axios.get('/api/debtors/analytics')
+        api.get(`/api/transactions/analytics?${params}`),
+        api.get('/api/debtors/analytics')
       ]);
 
       setAnalytics(analyticsRes.data.data);

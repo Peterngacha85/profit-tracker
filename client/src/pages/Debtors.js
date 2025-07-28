@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import api from '../api';
 import { format } from 'date-fns';
 import {
   Plus,
@@ -48,7 +48,7 @@ const Debtors = () => {
         params.append('overdue', 'true');
       }
 
-      const response = await axios.get(`/api/debtors?${params}`);
+      const response = await api.get(`/api/debtors?${params}`);
       setDebtors(response.data.data);
     } catch (error) {
       console.error('Error fetching debtors:', error);
@@ -61,10 +61,10 @@ const Debtors = () => {
   const onSubmit = async (data) => {
     try {
       if (editingDebtor) {
-        await axios.put(`/api/debtors/${editingDebtor._id}`, data);
+        await api.put(`/api/debtors/${editingDebtor._id}`, data);
         toast.success('Debtor updated successfully');
       } else {
-        await axios.post('/api/debtors', data);
+        await api.post('/api/debtors', data);
         toast.success('Debtor created successfully');
       }
       
@@ -80,7 +80,7 @@ const Debtors = () => {
 
   const handleMarkAsPaid = async (id) => {
     try {
-      await axios.patch(`/api/debtors/${id}/mark-paid`);
+      await api.patch(`/api/debtors/${id}/mark-paid`);
       toast.success('Debtor marked as paid');
       fetchDebtors();
     } catch (error) {
@@ -103,7 +103,7 @@ const Debtors = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this debtor?')) {
       try {
-        await axios.delete(`/api/debtors/${id}`);
+        await api.delete(`/api/debtors/${id}`);
         toast.success('Debtor deleted successfully');
         fetchDebtors();
       } catch (error) {
