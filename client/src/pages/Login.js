@@ -20,7 +20,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login, register, user, logout } = useAuth();
   const navigate = useNavigate();
-  const navigate = useNavigate();
+ 
 
   const {
     register: registerField,
