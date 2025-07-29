@@ -18,7 +18,8 @@ const Login = () => {
   }, [location.search]);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { login, register, user } = useAuth();
+  const { login, register, user, logout } = useAuth();
+  const navigate = useNavigate();
   const navigate = useNavigate();
 
   const {
@@ -57,21 +58,15 @@ const Login = () => {
           <p className="mb-6 text-gray-600">You are currently signed in. If you want to use a different account, please log out first.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
             <button
-              onClick={() => {
-                window.location.href = '/';
-              }}
+              onClick={() => navigate('/dashboard')}
               className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
             >
               Home
             </button>
             <button
               onClick={() => {
-                // Use the logout function from context
-                if (typeof window !== 'undefined') {
-                  const { logout } = require('../contexts/AuthContext');
-                  logout();
-                  window.location.href = '/login';
-                }
+                logout();
+                navigate('/login');
               }}
               className="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-red-700 transition"
             >
