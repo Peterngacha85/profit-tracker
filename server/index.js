@@ -30,8 +30,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // CORS middleware
 app.use(cors({
-  origin: 'https://profit-tracker-nine.vercel.app',
-  credentials: true
+  origin: '*',
+  credentials: false
 }));
 
 // Routes
