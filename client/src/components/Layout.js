@@ -19,11 +19,11 @@ const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', href: '/', icon: Home },
-    { name: 'Transactions', href: '/transactions', icon: Receipt },
-    { name: 'Debtors', href: '/debtors', icon: Users },
-    { name: 'Reports', href: '/reports', icon: BarChart3 },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'Dashboard', href: '/dashboard', icon: Home },
+    { name: 'Transactions', href: '/dashboard/transactions', icon: Receipt },
+    { name: 'Debtors', href: '/dashboard/debtors', icon: Users },
+    { name: 'Reports', href: '/dashboard/reports', icon: BarChart3 },
+    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
   const handleLogout = () => {
