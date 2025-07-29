@@ -116,7 +116,6 @@ export const AuthProvider = ({ children }) => {
   // Login function
   const login = async (email, password) => {
     dispatch({ type: AUTH_ACTIONS.LOGIN_START });
-    
     try {
       const response = await api.post('/api/auth/login', {
         email,
@@ -125,13 +124,12 @@ export const AuthProvider = ({ children }) => {
 
       // Extract token and user fields from response
       const { token, ...user } = response.data.data;
-      
       dispatch({
         type: AUTH_ACTIONS.LOGIN_SUCCESS,
         payload: { user, token }
       });
-
       toast.success('Login successful!');
+      window.location.reload();
       return { success: true };
     } catch (error) {
       const message = error.response?.data?.message || 'Login failed';
