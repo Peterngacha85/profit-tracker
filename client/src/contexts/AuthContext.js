@@ -129,7 +129,6 @@ export const AuthProvider = ({ children }) => {
         payload: { user, token }
       });
       toast.success('Login successful!');
-      window.location.reload();
       return { success: true };
     } catch (error) {
       const message = error.response?.data?.message || 'Login failed';
