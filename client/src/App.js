@@ -8,6 +8,7 @@ import Debtors from './pages/Debtors';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Layout from './components/Layout';
+import Landing from './pages/Landing';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -26,11 +27,15 @@ const ProtectedRoute = ({ children }) => {
 
 // App Routes Component
 const AppRoutes = () => {
+  const { user } = useAuth();
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      {/* Public landing page for unauthenticated users */}
+      <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Landing />} />
+      {/* Protected routes */}
       <Route
-        path="/"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Layout />
