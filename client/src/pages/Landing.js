@@ -14,7 +14,10 @@ const Landing = () => {
           <Link to="/login?register=1" className="bg-blue-700 border border-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-blue-800 transition">Register</Link>
         </div>
       </div>
-      <footer className="mt-16 text-sm opacity-70">&copy; {new Date().getFullYear()} Profit Tracker. All rights reserved.</footer>
+      <footer className="mt-16 text-sm opacity-70">
+        &copy; {new Date().getFullYear()} Profit Tracker. All rights reserved.<br />
+        Developed by <a href="https://fastweb.co.ke" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-200">Fastweb Technologies</a>
+      </footer>
     </div>
   );
 };
