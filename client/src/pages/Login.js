@@ -18,7 +18,7 @@ const Login = () => {
   }, [location.search]);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { login, register } = useAuth();
+  const { login, register, user } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -48,6 +48,17 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  if (user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-2 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-md w-full text-center bg-white p-8 rounded-lg shadow">
+          <h2 className="text-2xl font-bold mb-4 text-primary-700">You are already logged in</h2>
+          <p className="mb-6 text-gray-600">You are currently signed in. If you want to use a different account, please log out first.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-2 sm:px-6 lg:px-8 w-full">
