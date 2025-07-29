@@ -55,6 +55,29 @@ const Login = () => {
         <div className="max-w-md w-full text-center bg-white p-8 rounded-lg shadow">
           <h2 className="text-2xl font-bold mb-4 text-primary-700">You are already logged in</h2>
           <p className="mb-6 text-gray-600">You are currently signed in. If you want to use a different account, please log out first.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+            <button
+              onClick={() => {
+                window.location.href = '/';
+              }}
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => {
+                // Use the logout function from context
+                if (typeof window !== 'undefined') {
+                  const { logout } = require('../contexts/AuthContext');
+                  logout();
+                  window.location.href = '/login';
+                }
+              }}
+              className="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-red-700 transition"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     );
