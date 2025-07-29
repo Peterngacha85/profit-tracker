@@ -11,7 +11,7 @@ const Landing = () => {
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Link to="/login" className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg shadow hover:bg-blue-100 transition">Login</Link>
-          <Link to="/register" className="bg-blue-700 border border-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-blue-800 transition">Register</Link>
+          <Link to="/login?register=1" className="bg-blue-700 border border-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-blue-800 transition">Register</Link>
         </div>
       </div>
       <footer className="mt-16 text-sm opacity-70">&copy; {new Date().getFullYear()} Profit Tracker. All rights reserved.</footer>

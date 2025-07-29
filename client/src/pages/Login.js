@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { Truck, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  // Show registration form if ?register=1 is in the URL
+  const [isLogin, setIsLogin] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('register') !== '1';
+  });
+  // If the user navigates to /login?register=1 after initial mount, update the form
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    setIsLogin(params.get('register') !== '1');
+  }, [location.search]);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { login, register } = useAuth();
