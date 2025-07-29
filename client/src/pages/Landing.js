@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Landing = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-600 to-indigo-800 text-white px-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-blue-500 via-purple-400 to-pink-400 text-white px-4 transition-colors duration-1000">
       <div className="max-w-xl w-full text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">Welcome to Profit Tracker</h1>
         <p className="mb-8 text-lg md:text-xl opacity-90">
