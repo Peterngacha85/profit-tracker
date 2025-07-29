@@ -30,6 +30,7 @@ const AppRoutes = () => {
   const { user } = useAuth();
   return (
     <Routes>
+      {/* Login/register page is always accessible, even for authenticated users */}
       <Route path="/login" element={<Login />} />
       {/* Public landing page for unauthenticated users */}
       <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Landing />} />
