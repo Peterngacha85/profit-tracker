@@ -5,31 +5,36 @@ const Debtor = require('../models/Debtor');
 // @access  Private
 const getDebtors = async (req, res) => {
   try {
-    const { status, overdue, page = 1, limit = 10 } = req.query;
-    
+    const { status, overdue, page = 1, limit = 10, search } = req.query;
+
     const query = { createdBy: req.user._id };
-    
+
     // Filter by status
     if (status && ['unpaid', 'paid'].includes(status)) {
       query.status = status;
     }
-    
+
     // Filter overdue debtors
     if (overdue === 'true') {
       query.status = 'unpaid';
       query.dueDate = { $lt: new Date() };
     }
-    
+
+    // Filter by clientName (case-insensitive, partial match)
+    if (search && search.trim() !== '') {
+      query.clientName = { $regex: search.trim(), $options: 'i' };
+    }
+
     const skip = (page - 1) * limit;
-    
+
     const debtors = await Debtor.find(query)
       .sort({ dueDate: 1 })
       .skip(skip)
       .limit(parseInt(limit))
       .populate('createdBy', 'name');
-    
+
     const total = await Debtor.countDocuments(query);
-    
+
     res.json({
       success: true,
       data: debtors,
