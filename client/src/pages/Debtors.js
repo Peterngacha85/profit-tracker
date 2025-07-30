@@ -21,7 +21,8 @@ const Debtors = () => {
   const [editingDebtor, setEditingDebtor] = useState(null);
   const [filters, setFilters] = useState({
     status: '',
-    overdue: false
+    overdue: false,
+    search: ''
   });
 
   const {
@@ -39,15 +40,15 @@ const Debtors = () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
-      
       if (filters.status) {
         params.append('status', filters.status);
       }
-      
       if (filters.overdue) {
         params.append('overdue', 'true');
       }
-
+      if (filters.search) {
+        params.append('search', filters.search);
+      }
       const response = await api.get(`/api/debtors?${params}`);
       setDebtors(response.data.data);
     } catch (error) {
@@ -181,6 +182,18 @@ const Debtors = () => {
                 <option value="paid">Paid</option>
               </select>
             </div>
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Search by Name
+              </label>
+              <input
+                type="text"
+                value={filters.search}
+                onChange={e => setFilters({ ...filters, search: e.target.value })}
+                className="input"
+                placeholder="Enter client name..."
+              />
+            </div>
             <div className="flex items-center">
               <label className="flex items-center">
                 <input
@@ -209,8 +222,10 @@ const Debtors = () => {
               <p className="mt-2 text-sm text-gray-500">No debtors found</p>
             </div>
           ) : (
-            debtors.map((debtor) => (
-              <div key={debtor._id} className="card">
+            [...debtors]
+              .sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate))
+              .map((debtor) => (
+                <div key={debtor._id} className="card">
                 <div className="card-body">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
