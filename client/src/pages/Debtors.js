@@ -49,6 +49,7 @@ const Debtors = () => {
       if (filters.search) {
         params.append('search', filters.search);
       }
+      params.append('limit', '1000');
       const response = await api.get(`/api/debtors?${params}`);
       setDebtors(response.data.data);
     } catch (error) {
