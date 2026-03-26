@@ -79,166 +79,168 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-2 sm:px-6 lg:px-8 w-full">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary-100">
-            <Truck className="h-6 w-6 text-primary-600" />
+    <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8 w-full">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-10">
+          <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-2xl bg-brand-50 mb-6">
+            <Truck className="h-8 w-8 text-brand-500" />
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {isLogin ? 'Sign in to your account' : 'Create your account'}
+          <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+            {isLogin ? 'Welcome back' : 'Create an account'}
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-4 text-lg text-gray-500 font-medium">
             {isLogin ? (
               <>
-                Or{' '}
+                New here?{' '}
                 <button
                   onClick={() => setIsLogin(false)}
-                  className="font-medium text-primary-600 hover:text-primary-500"
+                  className="text-brand-500 hover:text-brand-600 font-bold underline underline-offset-4"
                 >
-                  create a new account
+                  Create an account
                 </button>
               </>
             ) : (
               <>
-                Or{' '}
+                Already have one?{' '}
                 <button
                   onClick={() => setIsLogin(true)}
-                  className="font-medium text-primary-600 hover:text-primary-500"
+                  className="text-brand-500 hover:text-brand-600 font-bold underline underline-offset-4"
                 >
-                  sign in to existing account
+                  Sign in
                 </button>
               </>
             )}
           </p>
         </div>
         
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            {!isLogin && (
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  {...registerField('name', {
-                    required: !isLogin && 'Name is required',
-                    minLength: {
-                      value: 2,
-                      message: 'Name must be at least 2 characters'
-                    }
-                  })}
-                  className="input mt-1"
-                  placeholder="Enter your full name"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-danger-600">{errors.name.message}</p>
-                )}
-              </div>
-            )}
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                {...registerField('email', {
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address'
-                  }
-                })}
-                className="input mt-1"
-                placeholder="Enter your email"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-danger-600">{errors.email.message}</p>
-              )}
-            </div>
-            
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="relative mt-1">
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...registerField('password', {
-                    required: 'Password is required',
-                    minLength: {
-                      value: 6,
-                      message: 'Password must be at least 6 characters'
-                    }
-                  })}
-                  className="input pr-10"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="mt-1 text-sm text-danger-600">{errors.password.message}</p>
-              )}
-            </div>
-            
-            {!isLogin && (
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                  Confirm Password
-                </label>
-                <input
-                  id="confirmPassword"
-                  type="password"
-                  {...registerField('confirmPassword', {
-                    required: !isLogin && 'Please confirm your password',
-                    validate: (val) => {
-                      if (watch('password') != val) {
-                        return "Passwords don't match";
+        <div className="bg-white p-8 border border-gray-200 rounded-3xl shadow-sm">
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-4">
+              {!isLogin && (
+                <div>
+                  <label htmlFor="name" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+                    Full Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    {...registerField('name', {
+                      required: !isLogin && 'Name is required',
+                      minLength: {
+                        value: 2,
+                        message: 'Name must be at least 2 characters'
                       }
+                    })}
+                    className="input"
+                    placeholder="John Doe"
+                  />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-red-500 font-medium">{errors.name.message}</p>
+                  )}
+                </div>
+              )}
+              
+              <div>
+                <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+                  Email Address
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  {...registerField('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Invalid email address'
                     }
                   })}
-                  className="input mt-1"
-                  placeholder="Confirm your password"
+                  className="input"
+                  placeholder="name@example.com"
                 />
-                {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-danger-600">{errors.confirmPassword.message}</p>
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500 font-medium">{errors.email.message}</p>
                 )}
               </div>
-            )}
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-              ) : (
-                isLogin ? 'Sign In' : 'Create Account'
+              
+              <div>
+                <label htmlFor="password" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    {...registerField('password', {
+                      required: 'Password is required',
+                      minLength: {
+                        value: 6,
+                        message: 'Password must be at least 6 characters'
+                      }
+                    })}
+                    className="input pr-12"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="mt-1 text-sm text-red-500 font-medium">{errors.password.message}</p>
+                )}
+              </div>
+              
+              {!isLogin && (
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+                    Confirm Password
+                  </label>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    {...registerField('confirmPassword', {
+                      required: !isLogin && 'Please confirm your password',
+                      validate: (val) => {
+                        if (watch('password') != val) {
+                          return "Passwords don't match";
+                        }
+                      }
+                    })}
+                    className="input"
+                    placeholder="••••••••"
+                  />
+                  {errors.confirmPassword && (
+                    <p className="mt-1 text-sm text-red-500 font-medium">{errors.confirmPassword.message}</p>
+                  )}
+                </div>
               )}
-            </button>
-          </div>
-        </form>
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn-primary w-full py-4 text-base"
+              >
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                ) : (
+                  isLogin ? 'Sign In' : 'Create Account'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Login; 
+export default Login;
