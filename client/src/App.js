@@ -9,6 +9,7 @@ import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Layout from './components/Layout';
 import Landing from './pages/Landing';
+import { ModalProvider } from './contexts/ModalContext';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -53,8 +54,6 @@ const AppRoutes = () => {
     </Routes>
   );
 };
-
-import { ModalProvider } from './contexts/ModalContext';
 
 // Main App Component
 const App = () => {
