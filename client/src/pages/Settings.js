@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
-import { User, Lock, Shield, Download } from 'lucide-react';
+import { User, Lock, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Settings = () => {

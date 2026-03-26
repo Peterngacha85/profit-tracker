@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import { format } from 'date-fns';
@@ -6,8 +6,6 @@ import {
   Plus,
   Edit,
   Trash2,
-  Filter,
-  Calendar,
   DollarSign,
   FileText
 } from 'lucide-react';
@@ -35,11 +33,7 @@ const Transactions = () => {
 
   const selectedType = watch('type');
 
-  useEffect(() => {
-    fetchTransactions();
-  }, [activeTab, filters]);
-
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -64,7 +58,11 @@ const Transactions = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, filters]);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
 
   const onSubmit = async (data) => {
     try {
