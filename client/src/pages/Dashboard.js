@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api';
 import { format } from 'date-fns';
 import {
@@ -20,7 +20,6 @@ import {
   TrendingUp,
   TrendingDown,
   Users,
-  Calendar,
   ArrowUpRight,
   ArrowDownRight
 } from 'lucide-react';
@@ -32,11 +31,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState('month');
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, [period]);
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       setLoading(true);
       const [analyticsRes, debtorRes] = await Promise.all([
@@ -52,7 +47,11 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [period]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
