@@ -11,6 +11,7 @@ import {
   Calendar
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useModal } from '../contexts/ModalContext';
 
 const Debtors = () => {
   const [debtors, setDebtors] = useState([]);
@@ -22,6 +23,7 @@ const Debtors = () => {
     overdue: false,
     search: ''
   });
+  const { confirm } = useModal();
 
   const {
     register,
@@ -101,7 +103,14 @@ const Debtors = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this debtor?')) {
+    const confirmed = await confirm({
+      title: 'Delete Debtor',
+      message: 'Are you sure you want to delete this debtor? This action cannot be undone.',
+      confirmText: 'Delete',
+      type: 'danger'
+    });
+
+    if (confirmed) {
       try {
         await api.delete(`/api/debtors/${id}`);
         toast.success('Debtor deleted successfully');

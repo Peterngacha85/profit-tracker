@@ -54,11 +54,15 @@ const AppRoutes = () => {
   );
 };
 
+import { ModalProvider } from './contexts/ModalContext';
+
 // Main App Component
 const App = () => {
   return (
     <AuthProvider>
-      <AppRoutes />
+      <ModalProvider>
+        <AppRoutes />
+      </ModalProvider>
     </AuthProvider>
   );
 };

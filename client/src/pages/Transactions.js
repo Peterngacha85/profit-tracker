@@ -10,6 +10,7 @@ import {
   FileText
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useModal } from '../contexts/ModalContext';
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -22,6 +23,7 @@ const Transactions = () => {
     endDate: '',
     type: ''
   });
+  const { confirm } = useModal();
 
   const {
     register,
@@ -102,7 +104,14 @@ const Transactions = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this transaction?')) {
+    const confirmed = await confirm({
+      title: 'Delete Transaction',
+      message: 'Are you sure you want to delete this transaction? This action cannot be undone.',
+      confirmText: 'Delete',
+      type: 'danger'
+    });
+
+    if (confirmed) {
       try {
         await api.delete(`/api/transactions/${id}`);
         toast.success('Transaction deleted successfully');
