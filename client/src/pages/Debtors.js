@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import { format } from 'date-fns';
@@ -7,10 +7,8 @@ import {
   Edit,
   Trash2,
   CheckCircle,
-  AlertCircle,
   User,
-  Calendar,
-  DollarSign
+  Calendar
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -32,11 +30,7 @@ const Debtors = () => {
     formState: { errors }
   } = useForm();
 
-  useEffect(() => {
-    fetchDebtors();
-  }, [filters]);
-
-  const fetchDebtors = async () => {
+  const fetchDebtors = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -58,7 +52,11 @@ const Debtors = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    fetchDebtors();
+  }, [fetchDebtors]);
 
   const onSubmit = async (data) => {
     try {
