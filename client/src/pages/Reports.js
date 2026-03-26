@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api';
 import { format } from 'date-fns';
 import {
@@ -33,11 +33,7 @@ const Reports = () => {
     endDate: ''
   });
 
-  useEffect(() => {
-    fetchReportData();
-  }, [period, customDateRange]);
-
-  const fetchReportData = async () => {
+  const fetchReportData = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -62,7 +58,11 @@ const Reports = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [period, customDateRange]);
+
+  useEffect(() => {
+    fetchReportData();
+  }, [fetchReportData]);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
