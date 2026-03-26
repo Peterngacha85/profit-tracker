@@ -208,7 +208,7 @@ const Login = () => {
                     {...registerField('confirmPassword', {
                       required: !isLogin && 'Please confirm your password',
                       validate: (val) => {
-                        if (watch('password') != val) {
+                        if (watch('password') !== val) {
                           return "Passwords don't match";
                         }
                       }
