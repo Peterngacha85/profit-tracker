@@ -13,6 +13,16 @@ const debtorRoutes = require('./routes/debtors');
 
 const app = express();
 
+// CORS middleware - must be before helmet
+const corsOptions = {
+  origin: ['https://www.muriithij.co.ke', 'https://muriithij.co.ke', 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Security middleware
 app.use(helmet());
 
@@ -27,12 +37,6 @@ if (process.env.NODE_ENV === 'development') {
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// CORS middleware
-app.use(cors({
-  origin: '*',
-  credentials: false
-}));
 
 // Routes
 app.use('/api/auth', authRoutes);
