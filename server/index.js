@@ -14,14 +14,8 @@ const debtorRoutes = require('./routes/debtors');
 const app = express();
 
 // CORS middleware - must be before helmet
-const corsOptions = {
-  origin: ['https://www.muriithij.co.ke', 'https://muriithij.co.ke', 'http://localhost:3000'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use(cors());
+app.options('*', cors());
 
 // Security middleware
 app.use(helmet());
