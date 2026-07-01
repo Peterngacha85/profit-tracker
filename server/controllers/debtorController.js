@@ -7,7 +7,7 @@ const getDebtors = async (req, res) => {
   try {
     const { status, overdue, page = 1, limit = 10, search } = req.query;
 
-    const query = { createdBy: req.user._id };
+    const query = req.user.role === 'admin' ? {} : { createdBy: req.user._id };
 
     // Filter by status
     if (status && ['unpaid', 'paid'].includes(status)) {
@@ -70,13 +70,13 @@ const getDebtor = async (req, res) => {
     }
     
     // Check ownership
-    if (debtor.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && debtor.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     res.json({
       success: true,
       data: debtor
@@ -133,13 +133,13 @@ const updateDebtor = async (req, res) => {
     }
     
     // Check ownership
-    if (debtor.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && debtor.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     debtor = await Debtor.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -174,13 +174,13 @@ const markAsPaid = async (req, res) => {
     }
     
     // Check ownership
-    if (debtor.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && debtor.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     debtor.status = 'paid';
     await debtor.save();
     
@@ -212,13 +212,13 @@ const deleteDebtor = async (req, res) => {
     }
     
     // Check ownership
-    if (debtor.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && debtor.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     await debtor.deleteOne();
     
     res.json({
@@ -239,7 +239,7 @@ const deleteDebtor = async (req, res) => {
 // @access  Private
 const getDebtorAnalytics = async (req, res) => {
   try {
-    const debtors = await Debtor.find({ createdBy: req.user._id });
+    const debtors = await Debtor.find(req.user.role === 'admin' ? {} : { createdBy: req.user._id });
     
     // Calculate totals
     const totalDebt = debtors

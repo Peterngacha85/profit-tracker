@@ -6,8 +6,8 @@ const Transaction = require('../models/Transaction');
 const getTransactions = async (req, res) => {
   try {
     const { type, startDate, endDate, page = 1, limit = 10 } = req.query;
-    
-    const query = { createdBy: req.user._id };
+
+    const query = req.user.role === 'admin' ? {} : { createdBy: req.user._id };
     
     // Filter by type
     if (type && ['sale', 'delivery_fee', 'expense'].includes(type)) {
@@ -70,13 +70,13 @@ const getTransaction = async (req, res) => {
     }
     
     // Check ownership
-    if (transaction.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && transaction.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     res.json({
       success: true,
       data: transaction
@@ -142,13 +142,13 @@ const updateTransaction = async (req, res) => {
     }
     
     // Check ownership
-    if (transaction.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && transaction.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     transaction = await Transaction.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -183,13 +183,13 @@ const deleteTransaction = async (req, res) => {
     }
     
     // Check ownership
-    if (transaction.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role !== 'admin' && transaction.createdBy.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         success: false,
         message: 'Not authorized'
       });
     }
-    
+
     await transaction.deleteOne();
     
     res.json({
@@ -249,7 +249,7 @@ const getAnalytics = async (req, res) => {
     }
     
     const query = {
-      createdBy: req.user._id,
+      ...(req.user.role === 'admin' ? {} : { createdBy: req.user._id }),
       ...dateFilter
     };
     
