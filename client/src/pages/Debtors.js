@@ -82,7 +82,7 @@ const Debtors = () => {
 
   const handleMarkAsPaid = async (id) => {
     try {
-      await api.patch(`/api/debtors/${id}/mark-paid`);
+      await api.put(`/api/debtors/${id}/mark-paid`);
       toast.success('Debtor marked as paid');
       fetchDebtors();
     } catch (error) {

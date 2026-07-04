@@ -51,10 +51,10 @@ router.put('/:id', [
   body('transactionDate', 'Transaction date must be a valid date').optional().isISO8601()
 ], updateDebtor);
 
-// @route   PATCH /api/debtors/:id/mark-paid
+// @route   PUT /api/debtors/:id/mark-paid
 // @desc    Mark debtor as paid
 // @access  Private
-router.patch('/:id/mark-paid', markAsPaid);
+router.put('/:id/mark-paid', markAsPaid);
 
 // @route   DELETE /api/debtors/:id
 // @desc    Delete debtor

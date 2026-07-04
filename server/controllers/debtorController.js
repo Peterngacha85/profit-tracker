@@ -160,7 +160,7 @@ const updateDebtor = async (req, res) => {
 };
 
 // @desc    Mark debtor as paid
-// @route   PATCH /api/debtors/:id/mark-paid
+// @route   PUT /api/debtors/:id/mark-paid
 // @access  Private
 const markAsPaid = async (req, res) => {
   try {
